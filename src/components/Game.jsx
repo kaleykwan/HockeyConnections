@@ -1,9 +1,6 @@
 import { supabase } from "../supabaseClient";
 import { useEffect, useState } from "react";
-
-function SolvedRow({ words }) {}
-
-function WordRow() {}
+import GameGrid from "./GameGrid";
 
 async function getWords(game_id) {
   let { data: games, error } = await supabase
@@ -14,11 +11,35 @@ async function getWords(game_id) {
   if (error) {
     console.log(error);
   } else {
-    const categories = [
-      games[0].category_1,
-      games[0].category_2,
-      games[0].category_3,
-      games[0].category_4,
+    const answers = [
+      {
+        category: games[0].category_1,
+        first: games[0].first_first,
+        second: games[0].first_second,
+        third: games[0].first_third,
+        fourth: games[0].first_fourth,
+      },
+      {
+        category: games[0].category_2,
+        first: games[0].second_first,
+        second: games[0].second_second,
+        third: games[0].second_third,
+        fourth: games[0].second_fourth,
+      },
+      {
+        category: games[0].category_3,
+        first: games[0].third_first,
+        second: games[0].third_second,
+        third: games[0].third_third,
+        fourth: games[0].third_fourth,
+      },
+      {
+        category: games[0].category_4,
+        first: games[0].fourth_first,
+        second: games[0].fourth_second,
+        third: games[0].fourth_third,
+        fourth: games[0].fourth_fourth,
+      },
     ];
     const words = [
       games[0].first_first,
@@ -38,7 +59,7 @@ async function getWords(game_id) {
       games[0].fourth_third,
       games[0].fourth_fourth,
     ];
-    return { categories: categories, words: words };
+    return { answerData: answers, words: words };
   }
 }
 
@@ -55,23 +76,32 @@ function shuffle(unshuffled) {
 }
 
 export default function Game() {
-  const [solvedRows, setSolvedRows] = useState(null);
   const [unsolvedRows, setUnsolvedRows] = useState(null);
   const [gameData, setGameData] = useState(null);
+
   useEffect(() => {
-    (async () => {
-      setGameData(await getWords("55dcf03d-36ba-420d-aaed-51dac5b47b3f"));
-      if (gameData) {
-        const unshuffled = [...gameData.words];
-        setUnsolvedRows(shuffle(unshuffled));
-        console.log(unsolvedRows);
-      }
-    })();
+    async function getShuffledWords() {
+      const data = await getWords("55dcf03d-36ba-420d-aaed-51dac5b47b3f");
+      setGameData(data);
+      const unshuffled = [...data.words];
+      const shuffled = shuffle(unshuffled);
+      console.log(shuffled);
+      return shuffled;
+    }
+
+    getShuffledWords().then((data) => {
+      setUnsolvedRows(data);
+    });
   }, []);
+
+  if (!gameData) {
+    return null;
+  }
 
   return (
     <>
-      <p>Hello</p>
+      <GameGrid rowData={unsolvedRows} answerData={gameData.answerData} />
+      <p>Find groups of four that have something in common.</p>
     </>
   );
 }
