@@ -1,6 +1,8 @@
 import { supabase } from "../supabaseClient";
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 import GameGrid from "./GameGrid";
+
+export const GameContext = createContext();
 
 async function getWords(game_id) {
   let { data: games, error } = await supabase
@@ -14,31 +16,39 @@ async function getWords(game_id) {
     const answers = [
       {
         category: games[0].category_1,
-        first: games[0].first_first,
-        second: games[0].first_second,
-        third: games[0].first_third,
-        fourth: games[0].first_fourth,
+        words: [
+          games[0].first_first,
+          games[0].first_second,
+          games[0].first_third,
+          games[0].first_fourth,
+        ],
       },
       {
         category: games[0].category_2,
-        first: games[0].second_first,
-        second: games[0].second_second,
-        third: games[0].second_third,
-        fourth: games[0].second_fourth,
+        words: [
+          games[0].second_first,
+          games[0].second_second,
+          games[0].second_third,
+          games[0].second_fourth,
+        ],
       },
       {
         category: games[0].category_3,
-        first: games[0].third_first,
-        second: games[0].third_second,
-        third: games[0].third_third,
-        fourth: games[0].third_fourth,
+        words: [
+          games[0].third_first,
+          games[0].third_second,
+          games[0].third_third,
+          games[0].third_fourth,
+        ],
       },
       {
         category: games[0].category_4,
-        first: games[0].fourth_first,
-        second: games[0].fourth_second,
-        third: games[0].fourth_third,
-        fourth: games[0].fourth_fourth,
+        words: [
+          games[0].fourth_first,
+          games[0].fourth_second,
+          games[0].fourth_third,
+          games[0].fourth_fourth,
+        ],
       },
     ];
     const words = [
@@ -63,7 +73,7 @@ async function getWords(game_id) {
   }
 }
 
-function shuffle(unshuffled) {
+export function shuffle(unshuffled) {
   let shuffledWords = unshuffled
     .map((value) => ({ value, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
@@ -76,7 +86,12 @@ function shuffle(unshuffled) {
 }
 
 export default function Game() {
-  const [unsolvedRows, setUnsolvedRows] = useState(null);
+  // GameContext values
+  const [guesses, setGuesses] = useState([]);
+  const [numGuesses, setNumGuesses] = useState(0);
+
+  const [unsolvedRows, setUnsolvedRows] = useState([]);
+  const [solvedRows, setSolvedRows] = useState([]);
   const [gameData, setGameData] = useState(null);
 
   useEffect(() => {
@@ -100,8 +115,22 @@ export default function Game() {
 
   return (
     <>
-      <GameGrid rowData={unsolvedRows} answerData={gameData.answerData} />
-      <p>Find groups of four that have something in common.</p>
+      <GameContext.Provider
+        value={{
+          guesses,
+          setGuesses,
+          numGuesses,
+          setNumGuesses,
+          gameData,
+          unsolvedRows,
+          setUnsolvedRows,
+          solvedRows,
+          setSolvedRows,
+        }}
+      >
+        <GameGrid />
+        <p>Find groups of four that have something in common.</p>
+      </GameContext.Provider>
     </>
   );
 }
