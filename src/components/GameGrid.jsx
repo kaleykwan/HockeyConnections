@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { GameContext } from "./Game";
 import { shuffle } from "./Game";
+import { useNavigate } from "react-router-dom";
 
 function WordRow({ row, guesses, setGuesses }) {
   function addGuess(word) {
@@ -30,8 +31,9 @@ function WordRow({ row, guesses, setGuesses }) {
             fontWeight: "600",
             fontSize: 16,
             padding: 20,
-            paddingBottom: 24,
-            paddingTop: 24,
+            // paddingBottom: 26,
+            // paddingTop: 26,
+            height: 80,
             width: 150,
             backgroundColor: guesses.includes(word) ? "#656C7A" : "#E6E9F1",
             margin: 4,
@@ -68,8 +70,8 @@ function SolvedRow({ row }) {
         marginTop: 0,
         marginBottom: 8,
         borderRadius: 6,
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingTop: 15,
+        paddingBottom: 15,
       }}
     >
       <p
@@ -108,7 +110,9 @@ export default function GameGrid() {
     setUnsolvedRows,
     solvedRows,
     setSolvedRows,
+    gameOfTheDay,
   } = useContext(GameContext);
+  const navigate = useNavigate();
 
   function submit() {
     if (guesses.length != 4) {
@@ -213,6 +217,17 @@ export default function GameGrid() {
         >
           Submit
         </button>
+        {!gameOfTheDay && (
+          <button
+            style={{ outline: "none" }}
+            onClick={(e) => {
+              e.currentTarget.blur();
+              navigate("/");
+            }}
+          >
+            Home
+          </button>
+        )}
       </div>
     </div>
   );

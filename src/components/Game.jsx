@@ -85,7 +85,7 @@ export function shuffle(unshuffled) {
   return shuffledRows;
 }
 
-export default function Game() {
+export default function Game({game_id, gameOfTheDay}) {
   // GameContext values
   const [guesses, setGuesses] = useState([]);
   const [numGuesses, setNumGuesses] = useState(0);
@@ -96,7 +96,7 @@ export default function Game() {
 
   useEffect(() => {
     async function getShuffledWords() {
-      const data = await getWords("55dcf03d-36ba-420d-aaed-51dac5b47b3f");
+      const data = await getWords(game_id);
       setGameData(data);
       const unshuffled = [...data.words];
       const shuffled = shuffle(unshuffled);
@@ -110,7 +110,7 @@ export default function Game() {
   }, []);
 
   if (!gameData) {
-    return null;
+    return <p>Loading...</p>;
   }
 
   return (
@@ -126,6 +126,7 @@ export default function Game() {
           setUnsolvedRows,
           solvedRows,
           setSolvedRows,
+          gameOfTheDay
         }}
       >
         <GameGrid />
