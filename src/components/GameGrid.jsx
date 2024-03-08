@@ -32,7 +32,7 @@ function WordRow({ row, guesses, setGuesses }) {
             padding: 20,
             paddingBottom: 24,
             paddingTop: 24,
-            width: 130,
+            width: 150,
             backgroundColor: guesses.includes(word) ? "#656C7A" : "#E6E9F1",
             margin: 4,
             marginTop: 0,
@@ -63,7 +63,7 @@ function SolvedRow({ row }) {
             : row.categoryNum == 2
             ? "#43AFDE"
             : "#7B53D0",
-        width: 544,
+        width: 624,
         margin: 4,
         marginTop: 0,
         marginBottom: 8,
@@ -196,20 +196,22 @@ export default function GameGrid() {
       )}
       <div>
         <button
-          onClick={(e) => {
-            e.currentTarget.blur();
-            submit();
-          }}
-        >
-          Submit
-        </button>
-        <button
+          style={{ outline: "none" }}
           onClick={(e) => {
             e.currentTarget.blur();
             shuffleRemainingWords();
           }}
         >
           Shuffle
+        </button>
+        <button
+          style={{ outline: "none" }}
+          onClick={(e) => {
+            e.currentTarget.blur();
+            submit();
+          }}
+        >
+          Submit
         </button>
       </div>
     </div>
