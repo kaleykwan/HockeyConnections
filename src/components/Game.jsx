@@ -69,7 +69,7 @@ async function getWords(game_id) {
       games[0].fourth_third,
       games[0].fourth_fourth,
     ];
-    return { answerData: answers, words: words };
+    return { answerData: answers, words: words, title: games[0].title };
   }
 }
 
