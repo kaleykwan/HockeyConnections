@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { supabase } from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
+import { Colors } from "../ColorConstants";
+import "../styles/CreateGameStyle.css";
 
 export default function CreateGame() {
+  const [gameTitle, setGameTitle] = useState("");
   const [firstCategory, setFirstCategory] = useState("");
   const [secondCategory, setSecondCategory] = useState("");
   const [thirdCategory, setThirdCategory] = useState("");
@@ -49,6 +52,7 @@ export default function CreateGame() {
         fourth_second: fourthSecond,
         fourth_third: fourthThird,
         fourth_fourth: fourthFourth,
+        title: gameTitle,
       })
       .select();
 
@@ -61,61 +65,41 @@ export default function CreateGame() {
   return (
     <div>
       <div style={{ display: "flex", flexDirection: "column", gap: 15 }}>
-        <div style={{ display: "flex", gap: 15 }}>
+        <div className="titleInputWrapper">
+          <input
+            className="titleInput"
+            placeholder="Title"
+            maxLength={100}
+            value={gameTitle}
+            onChange={(e) => setGameTitle(e.target.value)}
+          />
+        </div>
+        <div className="categoryFormOne">
           <div
+            className="formSet"
             style={{
-              backgroundColor: "#F9C156",
+              backgroundColor: Colors.YELLOW,
               padding: 25,
+              paddingBottom: 10,
               borderRadius: 7,
             }}
           >
             <input
-              style={{
-                backgroundColor: "white",
-                color: "black",
-                border: "none",
-                padding: 10,
-                paddingTop: 13,
-                paddingBottom: 13,
-                borderRadius: 5,
-                width: 430,
-                marginBottom: 15,
-              }}
+              className="categoryInput"
               placeholder="Category"
+              maxLength={63}
               value={firstCategory}
               onChange={(e) => setFirstCategory(e.target.value)}
             />
             <div>
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginRight: 5,
-                  marginBottom: 15,
-                }}
+                className="leftItemInput"
                 placeholder="Item"
                 value={firstFirst}
                 onChange={(e) => setFirstFirst(e.target.value)}
               />
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginLeft: 5,
-                  marginBottom: 15,
-                }}
+                className="rightItemInput"
                 placeholder="Item"
                 value={firstSecond}
                 onChange={(e) => setFirstSecond(e.target.value)}
@@ -123,33 +107,13 @@ export default function CreateGame() {
             </div>
             <div>
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginRight: 5,
-                }}
+                className="leftItemInput"
                 placeholder="Item"
                 value={firstThird}
                 onChange={(e) => setFirstThird(e.target.value)}
               />
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginLeft: 5,
-                }}
+                className="rightItemInput"
                 placeholder="Item"
                 value={firstFourth}
                 onChange={(e) => setFirstFourth(e.target.value)}
@@ -158,58 +122,27 @@ export default function CreateGame() {
           </div>
           <div
             style={{
-              backgroundColor: "#61CEA7",
+              backgroundColor: Colors.GREEN,
               padding: 25,
+              paddingBottom: 10,
               borderRadius: 7,
             }}
           >
             <input
-              style={{
-                backgroundColor: "white",
-                color: "black",
-                border: "none",
-                padding: 10,
-                paddingTop: 13,
-                paddingBottom: 13,
-                borderRadius: 5,
-                width: 430,
-                marginBottom: 15,
-              }}
+              className="categoryInput"
               placeholder="Category"
               value={secondCategory}
               onChange={(e) => setSecondCategory(e.target.value)}
             />
             <div>
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginRight: 5,
-                  marginBottom: 15,
-                }}
+                className="leftItemInput"
                 placeholder="Item"
                 value={secondFirst}
                 onChange={(e) => setSecondFirst(e.target.value)}
               />
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginLeft: 5,
-                  marginBottom: 15,
-                }}
+                className="rightItemInput"
                 placeholder="Item"
                 value={secondSecond}
                 onChange={(e) => setSecondSecond(e.target.value)}
@@ -217,33 +150,13 @@ export default function CreateGame() {
             </div>
             <div>
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginRight: 5,
-                }}
+                className="leftItemInput"
                 placeholder="Item"
                 value={secondThird}
                 onChange={(e) => setSecondThird(e.target.value)}
               />
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginLeft: 5,
-                }}
+                className="rightItemInput"
                 placeholder="Item"
                 value={secondFourth}
                 onChange={(e) => setSecondFourth(e.target.value)}
@@ -251,61 +164,30 @@ export default function CreateGame() {
             </div>
           </div>
         </div>
-        <div style={{ display: "flex", gap: 15 }}>
+        <div className="categoryFormTwo">
           <div
             style={{
-              backgroundColor: "#43AFDE",
+              backgroundColor: Colors.BLUE,
               padding: 25,
+              paddingBottom: 10,
               borderRadius: 7,
             }}
           >
             <input
-              style={{
-                backgroundColor: "white",
-                color: "black",
-                border: "none",
-                padding: 10,
-                paddingTop: 13,
-                paddingBottom: 13,
-                borderRadius: 5,
-                width: 430,
-                marginBottom: 15,
-              }}
+              className="categoryInput"
               placeholder="Category"
               value={thirdCategory}
               onChange={(e) => setThirdCategory(e.target.value)}
             />
             <div>
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginRight: 5,
-                  marginBottom: 15,
-                }}
+                className="leftItemInput"
                 placeholder="Item"
                 value={thirdFirst}
                 onChange={(e) => setThirdFirst(e.target.value)}
               />
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginLeft: 5,
-                  marginBottom: 15,
-                }}
+                className="rightItemInput"
                 placeholder="Item"
                 value={thirdSecond}
                 onChange={(e) => setThirdSecond(e.target.value)}
@@ -313,33 +195,13 @@ export default function CreateGame() {
             </div>
             <div>
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginRight: 5,
-                }}
+                className="leftItemInput"
                 placeholder="Item"
                 value={thirdThird}
                 onChange={(e) => setThirdThird(e.target.value)}
               />
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginLeft: 5,
-                }}
+                className="rightItemInput"
                 placeholder="Item"
                 value={thirdFourth}
                 onChange={(e) => setThirdFourth(e.target.value)}
@@ -348,58 +210,27 @@ export default function CreateGame() {
           </div>
           <div
             style={{
-              backgroundColor: "#7B53D0",
+              backgroundColor: Colors.PURPLE,
               padding: 25,
+              paddingBottom: 10,
               borderRadius: 7,
             }}
           >
             <input
-              style={{
-                backgroundColor: "white",
-                color: "black",
-                border: "none",
-                padding: 10,
-                paddingTop: 13,
-                paddingBottom: 13,
-                borderRadius: 5,
-                width: 430,
-                marginBottom: 15,
-              }}
+              className="categoryInput"
               placeholder="Category"
               value={fourthCategory}
               onChange={(e) => setFourthCategory(e.target.value)}
             />
             <div>
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginRight: 5,
-                  marginBottom: 15,
-                }}
+                className="leftItemInput"
                 placeholder="Item"
                 value={fourthFirst}
                 onChange={(e) => setFourthFirst(e.target.value)}
               />
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginLeft: 5,
-                  marginBottom: 15,
-                }}
+                className="rightItemInput"
                 placeholder="Item"
                 value={fourthSecond}
                 onChange={(e) => setFourthSecond(e.target.value)}
@@ -407,33 +238,13 @@ export default function CreateGame() {
             </div>
             <div>
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginRight: 5,
-                }}
+                className="leftItemInput"
                 placeholder="Item"
                 value={fourthThird}
                 onChange={(e) => setFourthThird(e.target.value)}
               />
               <input
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  border: "none",
-                  padding: 10,
-                  paddingTop: 13,
-                  paddingBottom: 13,
-                  borderRadius: 5,
-                  width: 200,
-                  marginLeft: 5,
-                }}
+                className="rightItemInput"
                 placeholder="Item"
                 value={fourthFourth}
                 onChange={(e) => setFourthFourth(e.target.value)}
@@ -443,7 +254,7 @@ export default function CreateGame() {
         </div>
       </div>
       <button
-        style={{ outline: "none", margin: 15 }}
+        style={{ outline: "none", margin: 15, marginBottom: 0 }}
         onClick={(e) => {
           e.currentTarget.blur();
           createGame();
@@ -451,6 +262,9 @@ export default function CreateGame() {
       >
         Create
       </button>
+      <p className="note" style={{ marginTop: 10 }}>
+        Your game may be featured as the Game of the Day!
+      </p>
     </div>
   );
 }

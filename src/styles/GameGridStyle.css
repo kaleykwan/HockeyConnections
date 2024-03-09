@@ -1,0 +1,107 @@
+.tile {
+  font-weight: 700;
+  font-size: 16px;
+  padding: 20px;
+  height: 80px;
+  width: 150px;
+  margin: 4px;
+  margin-top: 0px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  overflow-wrap: break-word;
+}
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Micro+5&display=swap");
+
+.title {
+  font-size: 45px;
+  font-family: "Libre Baskerville", serif;
+  font-weight: 700;
+}
+
+.instructions {
+  padding-top: 0em;
+}
+
+.solvedRow {
+  width: 624px;
+  height: 85px;
+  margin: 4px;
+  margin-top: 0px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.solvedWords {
+  color: black;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+}
+
+.categoryName {
+  color: black;
+  font-weight: 800;
+  font-size: 18px;
+  margin: 0px;
+  margin-bottom: 4px;
+}
+
+@media (max-width: 25rem) {
+  .title {
+    font-size: 2em;
+  }
+
+  .grid {
+    margin: 0 auto;
+  }
+
+  .tile {
+    font-weight: 700px;
+    padding: 0.2em;
+    font-size: 0.9em;
+    height: 5em;
+    width: 6em;
+    margin: 0.2em;
+    margin-top: 0em;
+    margin-bottom: 0.4em;
+    border-radius: 3px;
+    overflow-wrap: break-word;
+  }
+
+  .solvedRow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 22.1em;
+    height: 4em;
+    margin: 0.2em;
+    margin-top: 0px;
+    margin-bottom: 0.4em;
+    border-radius: 3px;
+    padding: 0.3em;
+  }
+
+  .categoryName {
+    font-weight: 800;
+    font-size: 1.1em;
+  }
+
+  .solvedWords {
+    font-weight: 600;
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+  }
+
+  .instructions {
+    font-size: 0.8em;
+    margin-top: 0.8em;
+  }
+}

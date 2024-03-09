@@ -85,7 +85,7 @@ export function shuffle(unshuffled) {
   return shuffledRows;
 }
 
-export default function Game({game_id, gameOfTheDay}) {
+export default function Game({ game_id, gameOfTheDay }) {
   // GameContext values
   const [guesses, setGuesses] = useState([]);
   const [numGuesses, setNumGuesses] = useState(0);
@@ -126,11 +126,13 @@ export default function Game({game_id, gameOfTheDay}) {
           setUnsolvedRows,
           solvedRows,
           setSolvedRows,
-          gameOfTheDay
+          gameOfTheDay,
         }}
       >
         <GameGrid />
-        <p>Find groups of four that have something in common.</p>
+        <p className="instructions">
+          Find groups of four that have something in common!
+        </p>
       </GameContext.Provider>
     </>
   );

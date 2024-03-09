@@ -2,6 +2,8 @@ import { useEffect, useState, useContext } from "react";
 import { GameContext } from "./Game";
 import { shuffle } from "./Game";
 import { useNavigate } from "react-router-dom";
+import { Colors } from "../ColorConstants";
+import "../styles/GameGridStyle.css";
 
 function WordRow({ row, guesses, setGuesses }) {
   function addGuess(word) {
@@ -28,18 +30,7 @@ function WordRow({ row, guesses, setGuesses }) {
           }}
           style={{
             color: guesses.includes(word) ? "white" : "black",
-            fontWeight: "600",
-            fontSize: 16,
-            padding: 20,
-            // paddingBottom: 26,
-            // paddingTop: 26,
-            height: 80,
-            width: 150,
             backgroundColor: guesses.includes(word) ? "#656C7A" : "#E6E9F1",
-            margin: 4,
-            marginTop: 0,
-            marginBottom: 8,
-            borderRadius: 6,
             outline: "none",
           }}
         >
@@ -59,42 +50,16 @@ function SolvedRow({ row }) {
       style={{
         backgroundColor:
           row.categoryNum == 0
-            ? "#F9C156"
+            ? Colors.YELLOW
             : row.categoryNum == 1
-            ? "#61CEA7"
+            ? Colors.GREEN
             : row.categoryNum == 2
-            ? "#43AFDE"
-            : "#7B53D0",
-        width: 624,
-        margin: 4,
-        marginTop: 0,
-        marginBottom: 8,
-        borderRadius: 6,
-        paddingTop: 15,
-        paddingBottom: 15,
+            ? Colors.BLUE
+            : Colors.PURPLE,
       }}
     >
-      <p
-        style={{
-          color: "black",
-          fontWeight: "800",
-          fontSize: 18,
-          margin: 0,
-          marginBottom: 4,
-        }}
-      >
-        {row.category}
-      </p>
-      <p
-        style={{
-          color: "black",
-          fontWeight: "600",
-          fontSize: 18,
-          margin: 0,
-        }}
-      >
-        {mergedWords}
-      </p>
+      <p className="categoryName">{row.category}</p>
+      <p className="solvedWords">{mergedWords}</p>
     </div>
   );
 }
@@ -200,7 +165,7 @@ export default function GameGrid() {
       )}
       <div>
         <button
-          style={{ outline: "none" }}
+          style={{ outline: "none", color: "white" }}
           onClick={(e) => {
             e.currentTarget.blur();
             shuffleRemainingWords();
@@ -209,7 +174,7 @@ export default function GameGrid() {
           Shuffle
         </button>
         <button
-          style={{ outline: "none" }}
+          style={{ outline: "none", marginTop: 10, color: "white" }}
           onClick={(e) => {
             e.currentTarget.blur();
             submit();
@@ -219,7 +184,7 @@ export default function GameGrid() {
         </button>
         {!gameOfTheDay && (
           <button
-            style={{ outline: "none" }}
+            style={{ outline: "none", color: "white" }}
             onClick={(e) => {
               e.currentTarget.blur();
               navigate("/");

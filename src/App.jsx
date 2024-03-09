@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import "./styles/GameGridStyle.css";
 import Home from "./pages/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GamePage from "./pages/GamePage";
