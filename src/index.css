@@ -57,6 +57,10 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+input:focus {
+  outline: none
+}
+
 @media (max-width: 25rem) {
   button {
     padding: 0.7em;

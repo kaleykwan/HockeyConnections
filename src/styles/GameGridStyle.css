@@ -42,9 +42,9 @@
 
 .gameTitle {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 500;
   margin-bottom: 10px;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .instructions {
@@ -53,7 +53,6 @@
 
 .solvedRow {
   width: 624px;
-  height: 85px;
   margin: 4px;
   margin-top: 0px;
   margin-bottom: 8px;
@@ -116,12 +115,13 @@
     flex-direction: column;
     justify-content: center;
     width: 22.6em;
-    height: 4em;
     margin: 0.2em;
     margin-top: 0px;
     margin-bottom: 0.4em;
     border-radius: 3px;
     padding: 0.3em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
   }
 
   .categoryName {

@@ -4,8 +4,16 @@ import { shuffle } from "./Game";
 import { useNavigate } from "react-router-dom";
 import { Colors } from "../ColorConstants";
 import "../styles/GameGridStyle.css";
+import { toast, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function WordRow({ row, guesses, setGuesses, wordsInWrongGuess, shouldAnimate }) {
+function WordRow({
+  row,
+  guesses,
+  setGuesses,
+  wordsInWrongGuess,
+  shouldAnimate,
+}) {
   function isWordInWrongGuess(word) {
     return wordsInWrongGuess.includes(word);
   }
@@ -26,7 +34,9 @@ function WordRow({ row, guesses, setGuesses, wordsInWrongGuess, shouldAnimate })
       {row.map((word, index) => (
         <button
           key={index}
-          className={`tile ${shouldAnimate && isWordInWrongGuess(word) ? "shake" : ""}`}
+          className={`tile ${
+            shouldAnimate && isWordInWrongGuess(word) ? "shake" : ""
+          }`}
           onClick={(e) => {
             e.currentTarget.blur();
             addGuess(word);
@@ -199,7 +209,21 @@ export default function GameGrid() {
           style={{ outline: "none", marginTop: 10, color: "white" }}
           onClick={(e) => {
             e.currentTarget.blur();
-            submit();
+            const result = submit();
+            if (result == "one away") {
+              toast("one away!", {
+                autoClose: 800,
+                className: "custom-toast",
+                transition: Zoom,
+                position: "top-center",
+                closeButton: false,
+                hideProgressBar: true,
+                style: {
+                  backgroundColor: "black",
+                  color: "white",
+                },
+              });
+            }
           }}
         >
           Submit

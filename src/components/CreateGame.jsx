@@ -95,12 +95,14 @@ export default function CreateGame() {
               <input
                 className="leftItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={firstFirst}
                 onChange={(e) => setFirstFirst(e.target.value)}
               />
               <input
                 className="rightItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={firstSecond}
                 onChange={(e) => setFirstSecond(e.target.value)}
               />
@@ -109,12 +111,14 @@ export default function CreateGame() {
               <input
                 className="leftItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={firstThird}
                 onChange={(e) => setFirstThird(e.target.value)}
               />
               <input
                 className="rightItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={firstFourth}
                 onChange={(e) => setFirstFourth(e.target.value)}
               />
@@ -131,6 +135,7 @@ export default function CreateGame() {
             <input
               className="categoryInput"
               placeholder="Category"
+              maxLength={63}
               value={secondCategory}
               onChange={(e) => setSecondCategory(e.target.value)}
             />
@@ -138,12 +143,14 @@ export default function CreateGame() {
               <input
                 className="leftItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={secondFirst}
                 onChange={(e) => setSecondFirst(e.target.value)}
               />
               <input
                 className="rightItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={secondSecond}
                 onChange={(e) => setSecondSecond(e.target.value)}
               />
@@ -152,12 +159,14 @@ export default function CreateGame() {
               <input
                 className="leftItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={secondThird}
                 onChange={(e) => setSecondThird(e.target.value)}
               />
               <input
                 className="rightItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={secondFourth}
                 onChange={(e) => setSecondFourth(e.target.value)}
               />
@@ -176,6 +185,7 @@ export default function CreateGame() {
             <input
               className="categoryInput"
               placeholder="Category"
+              maxLength={63}
               value={thirdCategory}
               onChange={(e) => setThirdCategory(e.target.value)}
             />
@@ -183,12 +193,14 @@ export default function CreateGame() {
               <input
                 className="leftItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={thirdFirst}
                 onChange={(e) => setThirdFirst(e.target.value)}
               />
               <input
                 className="rightItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={thirdSecond}
                 onChange={(e) => setThirdSecond(e.target.value)}
               />
@@ -197,12 +209,14 @@ export default function CreateGame() {
               <input
                 className="leftItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={thirdThird}
                 onChange={(e) => setThirdThird(e.target.value)}
               />
               <input
                 className="rightItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={thirdFourth}
                 onChange={(e) => setThirdFourth(e.target.value)}
               />
@@ -219,6 +233,7 @@ export default function CreateGame() {
             <input
               className="categoryInput"
               placeholder="Category"
+              maxLength={63}
               value={fourthCategory}
               onChange={(e) => setFourthCategory(e.target.value)}
             />
@@ -226,12 +241,14 @@ export default function CreateGame() {
               <input
                 className="leftItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={fourthFirst}
                 onChange={(e) => setFourthFirst(e.target.value)}
               />
               <input
                 className="rightItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={fourthSecond}
                 onChange={(e) => setFourthSecond(e.target.value)}
               />
@@ -240,12 +257,14 @@ export default function CreateGame() {
               <input
                 className="leftItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={fourthThird}
                 onChange={(e) => setFourthThird(e.target.value)}
               />
               <input
                 className="rightItemInput"
                 placeholder="Item"
+                maxLength={21}
                 value={fourthFourth}
                 onChange={(e) => setFourthFourth(e.target.value)}
               />
