@@ -3,6 +3,8 @@ import { supabase } from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
 import { Colors } from "../ColorConstants";
 import "../styles/CreateGameStyle.css";
+import { toast, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function CreateGame() {
   const [gameTitle, setGameTitle] = useState("");
@@ -28,7 +30,66 @@ export default function CreateGame() {
   const [fourthFourth, setFourthFourth] = useState("");
   const navigate = useNavigate();
 
+  function checkInputs() {
+    if (firstCategory.length == 0) {
+      return false;
+    } else if (secondCategory.length == 0) {
+      return false;
+    } else if (thirdCategory.length == 0) {
+      return false;
+    } else if (fourthCategory.length == 0) {
+      return false;
+    } else if (firstFirst.length == 0) {
+      return false;
+    } else if (firstSecond.length == 0) {
+      return false;
+    } else if (firstThird.length == 0) {
+      return false;
+    } else if (firstFourth.length == 0) {
+      return false;
+    } else if (secondFirst.length == 0) {
+      return false;
+    } else if (secondSecond.length == 0) {
+      return false;
+    } else if (secondThird.length == 0) {
+      return false;
+    } else if (secondFourth.length == 0) {
+      return false;
+    } else if (thirdFirst.length == 0) {
+      return false;
+    } else if (thirdSecond.length == 0) {
+      return false;
+    } else if (thirdThird.length == 0) {
+      return false;
+    } else if (thirdFourth.length == 0) {
+      return false;
+    } else if (fourthFirst.length == 0) {
+      return false;
+    } else if (fourthSecond.length == 0) {
+      return false;
+    } else if (fourthThird.length == 0) {
+      return false;
+    } else if (fourthFourth.length == 0) {
+      return false;
+    }
+    return true;
+  }
   async function createGame() {
+    if (!checkInputs()) {
+      toast("Missing part of the form!", {
+        autoClose: 800,
+        className: "custom-toast",
+        transition: Zoom,
+        position: "top-center",
+        closeButton: false,
+        hideProgressBar: true,
+        style: {
+          backgroundColor: "black",
+          color: "white",
+        },
+      });
+      return;
+    }
     const { data, error } = await supabase
       .from("games")
       .insert({
