@@ -18,6 +18,13 @@
   font-weight: 700;
 }
 
+.gameTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  margin-top: 0px;
+}
+
 .instructions {
   padding-top: 0em;
 }
@@ -60,6 +67,13 @@
 
   .grid {
     margin: 0 auto;
+  }
+
+  .gameTitle {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    margin-top: 0px;
   }
 
   .tile {

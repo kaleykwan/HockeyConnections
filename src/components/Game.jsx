@@ -129,6 +129,7 @@ export default function Game({ game_id, gameOfTheDay }) {
           gameOfTheDay,
         }}
       >
+        <p className="gameTitle">{gameData.title}</p>
         <GameGrid />
         <p className="instructions">
           Find groups of four that have something in common!

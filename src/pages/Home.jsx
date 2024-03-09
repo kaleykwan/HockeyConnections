@@ -15,7 +15,7 @@ export default function Home() {
       <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
       {activeTab == "gameOfTheDay" && (
         <Game
-          game_id={"55dcf03d-36ba-420d-aaed-51dac5b47b3f"}
+          game_id={"1a4b229c-af1c-434e-aeff-236421276d92"}
           gameOfTheDay={true}
         />
       )}
