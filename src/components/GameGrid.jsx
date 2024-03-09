@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { Colors } from "../ColorConstants";
 import "../styles/GameGridStyle.css";
 
-function WordRow({ row, guesses, setGuesses }) {
+function WordRow({ row, guesses, setGuesses, wordsInWrongGuess, shouldAnimate }) {
+  function isWordInWrongGuess(word) {
+    return wordsInWrongGuess.includes(word);
+  }
   function addGuess(word) {
     if (guesses.includes(word)) {
       const updatedGuesses = guesses.filter((w) => {
@@ -23,7 +26,7 @@ function WordRow({ row, guesses, setGuesses }) {
       {row.map((word, index) => (
         <button
           key={index}
-          className="tile"
+          className={`tile ${shouldAnimate && isWordInWrongGuess(word) ? "shake" : ""}`}
           onClick={(e) => {
             e.currentTarget.blur();
             addGuess(word);
@@ -78,6 +81,8 @@ export default function GameGrid() {
     gameOfTheDay,
   } = useContext(GameContext);
   const navigate = useNavigate();
+  const [wordsInWrongGuess, setWordsInWrongGuess] = useState([]);
+  const [shouldAnimate, setShouldAnimate] = useState(false);
 
   function submit() {
     if (guesses.length != 4) {
@@ -98,11 +103,17 @@ export default function GameGrid() {
 
     let category = 0;
     if (correctCount.includes(3)) {
+      setWordsInWrongGuess(guesses);
+      setShouldAnimate(true);
       return "one away";
     } else if (!correctCount.includes(4)) {
+      setWordsInWrongGuess(guesses);
+      setShouldAnimate(true);
       return;
     } else {
       category = correctCount.findIndex((element) => element == 4);
+      setWordsInWrongGuess([]);
+      setShouldAnimate(false);
     }
 
     // if guesses are correct, remove guessed words from unsolvedRows
@@ -133,6 +144,15 @@ export default function GameGrid() {
     return "correct";
   }
 
+  useEffect(() => {
+    if (shouldAnimate) {
+      const timeout = setTimeout(() => {
+        setShouldAnimate(false);
+      }, 500);
+      return () => clearTimeout(timeout);
+    }
+  }, [shouldAnimate]);
+
   function shuffleRemainingWords() {
     const mergedUnsolved = unsolvedRows.flat();
     const newShuffled = shuffle(mergedUnsolved);
@@ -159,6 +179,8 @@ export default function GameGrid() {
               row={row}
               guesses={guesses}
               setGuesses={setGuesses}
+              wordsInWrongGuess={wordsInWrongGuess}
+              shouldAnimate={shouldAnimate}
             />
           ))}
         </div>
