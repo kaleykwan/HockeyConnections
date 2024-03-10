@@ -93,6 +93,7 @@ export default function Game({ game_id, gameOfTheDay }) {
   const [unsolvedRows, setUnsolvedRows] = useState([]);
   const [solvedRows, setSolvedRows] = useState([]);
   const [gameData, setGameData] = useState(null);
+  const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
     async function getShuffledWords() {
@@ -127,13 +128,22 @@ export default function Game({ game_id, gameOfTheDay }) {
           solvedRows,
           setSolvedRows,
           gameOfTheDay,
+          isGameOver,
+          setIsGameOver,
         }}
       >
         <p className="gameTitle">{gameData.title}</p>
         <GameGrid />
-        <p className="instructions">
-          Find groups of four that have something in common!
-        </p>
+        {!isGameOver && (
+          <p className="instructions">
+            Find groups of four that have something in common!
+          </p>
+        )}
+        {isGameOver && (
+          <p className="instructions">
+            Congratulations, you completed the game!
+          </p>
+        )}
       </GameContext.Provider>
     </>
   );

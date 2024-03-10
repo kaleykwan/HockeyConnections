@@ -89,10 +89,26 @@ export default function GameGrid() {
     solvedRows,
     setSolvedRows,
     gameOfTheDay,
+    isGameOver,
+    setIsGameOver,
   } = useContext(GameContext);
   const navigate = useNavigate();
   const [wordsInWrongGuess, setWordsInWrongGuess] = useState([]);
   const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  useEffect(() => {
+    if ((numGuesses == 4)) {
+      setIsGameOver(true);
+    }
+  }, [numGuesses]);
+
+  function restartGame() {
+    setSolvedRows([]);
+    const unshuffled = [...gameData.words];
+    const shuffled = shuffle(unshuffled);
+    setUnsolvedRows(shuffled);
+    setIsGameOver(false);
+  }
 
   function submit() {
     if (guesses.length != 4) {
@@ -196,38 +212,42 @@ export default function GameGrid() {
         </div>
       )}
       <div>
-        <button
-          style={{ outline: "none", color: "white" }}
-          onClick={(e) => {
-            e.currentTarget.blur();
-            shuffleRemainingWords();
-          }}
-        >
-          Shuffle
-        </button>
-        <button
-          style={{ outline: "none", marginTop: 10, color: "white" }}
-          onClick={(e) => {
-            e.currentTarget.blur();
-            const result = submit();
-            if (result == "one away") {
-              toast("one away!", {
-                autoClose: 800,
-                className: "custom-toast",
-                transition: Zoom,
-                position: "top-center",
-                closeButton: false,
-                hideProgressBar: true,
-                style: {
-                  backgroundColor: "black",
-                  color: "white",
-                },
-              });
-            }
-          }}
-        >
-          Submit
-        </button>
+        {!isGameOver && (
+          <button
+            style={{ outline: "none", color: "white" }}
+            onClick={(e) => {
+              e.currentTarget.blur();
+              shuffleRemainingWords();
+            }}
+          >
+            Shuffle
+          </button>
+        )}
+        {!isGameOver && (
+          <button
+            style={{ outline: "none", marginTop: 10, color: "white" }}
+            onClick={(e) => {
+              e.currentTarget.blur();
+              const result = submit();
+              if (result == "one away") {
+                toast("one away!", {
+                  autoClose: 800,
+                  className: "custom-toast",
+                  transition: Zoom,
+                  position: "top-center",
+                  closeButton: false,
+                  hideProgressBar: true,
+                  style: {
+                    backgroundColor: "black",
+                    color: "white",
+                  },
+                });
+              }
+            }}
+          >
+            Submit
+          </button>
+        )}
         {!gameOfTheDay && (
           <button
             style={{ outline: "none", color: "white" }}
@@ -237,6 +257,17 @@ export default function GameGrid() {
             }}
           >
             Home
+          </button>
+        )}
+        {isGameOver && (
+          <button
+            style={{ outline: "none", color: "white" }}
+            onClick={(e) => {
+              e.currentTarget.blur();
+              restartGame();
+            }}
+          >
+            Restart
           </button>
         )}
       </div>
