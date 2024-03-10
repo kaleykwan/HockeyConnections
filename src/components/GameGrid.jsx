@@ -91,6 +91,7 @@ export default function GameGrid() {
     gameOfTheDay,
     isGameOver,
     setIsGameOver,
+    handleOpen
   } = useContext(GameContext);
   const navigate = useNavigate();
   const [wordsInWrongGuess, setWordsInWrongGuess] = useState([]);
@@ -99,6 +100,8 @@ export default function GameGrid() {
   useEffect(() => {
     if ((numGuesses == 4)) {
       setIsGameOver(true);
+      setNumGuesses(0);
+      handleOpen();
     }
   }, [numGuesses]);
 
@@ -268,6 +271,17 @@ export default function GameGrid() {
             }}
           >
             Restart
+          </button>
+        )}
+        {isGameOver && (
+          <button
+            style={{ outline: "none", color: "white" }}
+            onClick={(e) => {
+              e.currentTarget.blur();
+              handleOpen();
+            }}
+          >
+            View Results
           </button>
         )}
       </div>

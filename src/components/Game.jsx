@@ -1,8 +1,17 @@
 import { supabase } from "../supabaseClient";
-import { useEffect, useState, createContext } from "react";
+import { useEffect, useState, createContext, forwardRef } from "react";
 import GameGrid from "./GameGrid";
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 
 export const GameContext = createContext();
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 async function getWords(game_id) {
   let { data: games, error } = await supabase
@@ -85,6 +94,10 @@ export function shuffle(unshuffled) {
   return shuffledRows;
 }
 
+function results() {
+  
+}
+
 export default function Game({ game_id, gameOfTheDay }) {
   // GameContext values
   const [guesses, setGuesses] = useState([]);
@@ -94,6 +107,16 @@ export default function Game({ game_id, gameOfTheDay }) {
   const [solvedRows, setSolvedRows] = useState([]);
   const [gameData, setGameData] = useState(null);
   const [isGameOver, setIsGameOver] = useState(false);
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     async function getShuffledWords() {
@@ -130,6 +153,7 @@ export default function Game({ game_id, gameOfTheDay }) {
           gameOfTheDay,
           isGameOver,
           setIsGameOver,
+          handleOpen
         }}
       >
         <p className="gameTitle">{gameData.title}</p>
@@ -144,6 +168,20 @@ export default function Game({ game_id, gameOfTheDay }) {
             Congratulations, you completed the game!
           </p>
         )}
+        <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle style={{ justifyContent: "center"}}>{"Congrats!"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description" style={{justifyContent: "center"}}>
+            You completed Hockey Connections: {gameData.title}
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
       </GameContext.Provider>
     </>
   );

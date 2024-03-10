@@ -7,7 +7,7 @@ export default function GamePage() {
   return (
     <div>
       <nav>
-        <h1 style={{ marginTop: 15, marginBottom: 10 }}>hockey connections</h1>
+        <h1 style={{ marginTop: 15, marginBottom: 10 }}>Hockey Connections</h1>
       </nav>
       <Game game_id={gameID} gameOfTheDay={false} />
     </div>

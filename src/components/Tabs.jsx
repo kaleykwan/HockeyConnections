@@ -4,7 +4,7 @@ export default function Tabs({ activeTab, setActiveTab }) {
       <button
         style={{
           borderRadius: 20,
-          marginBottom: 20,
+          marginBottom: 15,
           color: activeTab == "gameOfTheDay" ? "white" : "black",
           backgroundColor: activeTab == "gameOfTheDay" ? "black" : "#F3F3F3",
           outline: "none",
@@ -19,7 +19,7 @@ export default function Tabs({ activeTab, setActiveTab }) {
       <button
         style={{
           borderRadius: 20,
-          marginBottom: 20,
+          marginBottom: 15,
           color: activeTab == "createYourOwn" ? "white" : "black",
           backgroundColor: activeTab == "createYourOwn" ? "black" : "#F3F3F3",
           outline: "none",
