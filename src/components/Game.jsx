@@ -121,7 +121,11 @@ function ResultsRow({ row, gameData }) {
   return (
     <div className="coloredSquareRow">
       {colors.map((color, index) => (
-        <div key={index} className="coloredSquare" style={{ backgroundColor: color }}></div>
+        <div
+          key={index}
+          className="coloredSquare"
+          style={{ backgroundColor: color }}
+        ></div>
       ))}
     </div>
   );
@@ -142,7 +146,6 @@ export default function Game({ game_id, gameOfTheDay }) {
 
   const [openSolved, setOpenSolved] = useState(false);
   const [openUnsolved, setOpenUnsolved] = useState(false);
-
 
   const handleOpenSolved = () => {
     setOpenSolved(true);
@@ -212,15 +215,9 @@ export default function Game({ game_id, gameOfTheDay }) {
           </p>
         )}
         {isGameOverSolved && (
-          <p className="instructions">
-            You completed the game!
-          </p>
+          <p className="instructions">You completed the game!</p>
         )}
-        {isGameOverUnsolved && (
-          <p className="instructions">
-            Next time!
-          </p>
-        )}
+        {isGameOverUnsolved && <p className="instructions">Next time!</p>}
         <Dialog
           open={openSolved}
           TransitionComponent={Transition}
@@ -228,9 +225,7 @@ export default function Game({ game_id, gameOfTheDay }) {
           onClose={handleCloseSolved}
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogTitle style={{ textAlign: "center" }}>
-            {"Great!"}
-          </DialogTitle>
+          <DialogTitle style={{ textAlign: "center" }}>{"Great!"}</DialogTitle>
           <DialogContent>
             <DialogContentText
               id="alert-dialog-slide-description"
@@ -238,7 +233,13 @@ export default function Game({ game_id, gameOfTheDay }) {
             >
               You completed Hockey Connections: {gameData.title}
             </DialogContentText>
-            <DialogContent style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+            <DialogContent
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
               {allGuessesArray.map((row, index) => (
                 <ResultsRow
                   key={index}
@@ -266,7 +267,13 @@ export default function Game({ game_id, gameOfTheDay }) {
             >
               Hockey Connections: {gameData.title}
             </DialogContentText>
-            <DialogContent style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+            <DialogContent
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
               {allGuessesArray.map((row, index) => (
                 <ResultsRow
                   key={index}
@@ -278,7 +285,6 @@ export default function Game({ game_id, gameOfTheDay }) {
           </DialogContent>
         </Dialog>
       </GameContext.Provider>
-
     </>
   );
 }
