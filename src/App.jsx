@@ -5,6 +5,9 @@ import Home from "./pages/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GamePage from "./pages/GamePage";
 import { ToastContainer } from "react-toastify";
+import { inject } from '@vercel/analytics';
+ 
+inject();
 
 function App() {
   return (
