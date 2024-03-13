@@ -83,25 +83,71 @@ export default function GameGrid() {
     setGuesses,
     numGuesses,
     setNumGuesses,
+    numCorrectGuesses,
+    setNumCorrectGuesses,
     gameData,
     unsolvedRows,
     setUnsolvedRows,
     solvedRows,
     setSolvedRows,
     gameOfTheDay,
-    isGameOver,
-    setIsGameOver,
-    handleOpen
+    isGameOverSolved,
+    setIsGameOverSolved,
+    isGameOverUnsolved,
+    setIsGameOverUnsolved,
+    handleOpenSolved,
+    handleOpenUnsolved,
+    setAllGuessesArray,
   } = useContext(GameContext);
   const navigate = useNavigate();
   const [wordsInWrongGuess, setWordsInWrongGuess] = useState([]);
   const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [numCircles, setNumCircles] = useState(4);
+  const [circles, setCircles] = useState([]);
 
   useEffect(() => {
-    if ((numGuesses == 4)) {
-      setIsGameOver(true);
+    const newCircles = [];
+    for (let i = 0; i < numCircles; i++) {
+      newCircles.push(
+        <div
+          key={i}
+          className="circle"
+          style={{
+            backgroundColor: "black",
+            width: 20,
+            height: 20,
+            borderRadius: "50%",
+          }}
+        ></div>
+      );
+    }
+    setCircles(newCircles);
+  }, [numCircles]);
+
+  console.log(circles);
+
+  useEffect(() => {
+    if (numCorrectGuesses == 4) {
+      setIsGameOverSolved(true);
       setNumGuesses(0);
-      handleOpen();
+      setNumCorrectGuesses(0);
+      handleOpenSolved();
+    } else if (numGuesses - numCorrectGuesses == 4) {
+      setIsGameOverUnsolved(true);
+      setNumGuesses(0);
+      setNumCorrectGuesses(0);
+      let solvedGrid = [];
+      for (let i = 0; i < 4; i++) {
+        solvedGrid.push({
+          category: gameData.answerData[i].category,
+          words: gameData.answerData[i].words,
+          categoryNum: i,
+        });
+      }
+      setSolvedRows(solvedGrid);
+      setUnsolvedRows([]);
+      setGuesses([]);
+      handleOpenUnsolved();
     }
   }, [numGuesses]);
 
@@ -110,13 +156,19 @@ export default function GameGrid() {
     const unshuffled = [...gameData.words];
     const shuffled = shuffle(unshuffled);
     setUnsolvedRows(shuffled);
-    setIsGameOver(false);
+    setIsGameOverSolved(false);
+    setIsGameOverUnsolved(false);
+    setAllGuessesArray([]);
+    setNumCircles(4);
   }
 
   function submit() {
     if (guesses.length != 4) {
       return;
     }
+
+    setAllGuessesArray((prev) => [...prev, guesses]);
+    setNumGuesses((prev) => prev + 1);
 
     // check if guesses are correct
     const answers = gameData.answerData;
@@ -134,10 +186,12 @@ export default function GameGrid() {
     if (correctCount.includes(3)) {
       setWordsInWrongGuess(guesses);
       setShouldAnimate(true);
+      setNumCircles((prev) => prev - 1);
       return "one away";
     } else if (!correctCount.includes(4)) {
       setWordsInWrongGuess(guesses);
       setShouldAnimate(true);
+      setNumCircles((prev) => prev - 1);
       return;
     } else {
       category = correctCount.findIndex((element) => element == 4);
@@ -168,8 +222,8 @@ export default function GameGrid() {
     ]);
     setGuesses([]);
 
-    // update numGuesses
-    setNumGuesses((prev) => prev + 1);
+    // update correct guesses
+    setNumCorrectGuesses((prev) => prev + 1);
     return "correct";
   }
 
@@ -214,8 +268,21 @@ export default function GameGrid() {
           ))}
         </div>
       )}
+      {!isGameOverSolved && !isGameOverUnsolved && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            gap: 10,
+            marginTop: 10,
+            marginBottom: 10,
+          }}
+        >
+          Mistakes Remaining: {circles}
+        </div>
+      )}
       <div>
-        {!isGameOver && (
+        {!isGameOverSolved && !isGameOverUnsolved && (
           <button
             style={{ outline: "none", color: "white" }}
             onClick={(e) => {
@@ -226,7 +293,7 @@ export default function GameGrid() {
             Shuffle
           </button>
         )}
-        {!isGameOver && (
+        {!isGameOverSolved && !isGameOverUnsolved && (
           <button
             style={{ outline: "none", marginTop: 10, color: "white" }}
             onClick={(e) => {
@@ -262,7 +329,7 @@ export default function GameGrid() {
             Home
           </button>
         )}
-        {isGameOver && (
+        {(isGameOverSolved || isGameOverUnsolved) && (
           <button
             style={{ outline: "none", color: "white" }}
             onClick={(e) => {
@@ -273,12 +340,16 @@ export default function GameGrid() {
             Restart
           </button>
         )}
-        {isGameOver && (
+        {(isGameOverSolved || isGameOverUnsolved) && (
           <button
             style={{ outline: "none", color: "white" }}
             onClick={(e) => {
               e.currentTarget.blur();
-              handleOpen();
+              if (isGameOverSolved) {
+                handleOpenSolved();
+              } else {
+                handleOpenUnsolved();
+              }
             }}
           >
             View Results

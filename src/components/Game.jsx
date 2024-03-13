@@ -1,11 +1,12 @@
 import { supabase } from "../supabaseClient";
 import { useEffect, useState, createContext, forwardRef } from "react";
 import GameGrid from "./GameGrid";
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
+import { Colors } from "../ColorConstants";
 
 export const GameContext = createContext();
 
@@ -94,28 +95,69 @@ export function shuffle(unshuffled) {
   return shuffledRows;
 }
 
-function results() {
-  
+function getWordColor(word, gameData) {
+  for (let i = 0; i < 4; i++) {
+    if (gameData[i].words.includes(word)) {
+      switch (i) {
+        case 0:
+          return Colors.YELLOW;
+        case 1:
+          return Colors.GREEN;
+        case 2:
+          return Colors.BLUE;
+        case 3:
+          return Colors.PURPLE;
+      }
+    }
+  }
+}
+
+function ResultsRow({ row, gameData }) {
+  let colors = [];
+  for (let i = 0; i < row.length; i++) {
+    colors.push(getWordColor(row[i], gameData));
+  }
+
+  return (
+    <div className="coloredSquareRow">
+      {colors.map((color, index) => (
+        <div key={index} className="coloredSquare" style={{ backgroundColor: color }}></div>
+      ))}
+    </div>
+  );
 }
 
 export default function Game({ game_id, gameOfTheDay }) {
   // GameContext values
   const [guesses, setGuesses] = useState([]);
   const [numGuesses, setNumGuesses] = useState(0);
+  const [numCorrectGuesses, setNumCorrectGuesses] = useState(0);
 
   const [unsolvedRows, setUnsolvedRows] = useState([]);
   const [solvedRows, setSolvedRows] = useState([]);
   const [gameData, setGameData] = useState(null);
-  const [isGameOver, setIsGameOver] = useState(false);
+  const [isGameOverSolved, setIsGameOverSolved] = useState(false);
+  const [isGameOverUnsolved, setIsGameOverUnsolved] = useState(false);
+  const [allGuessesArray, setAllGuessesArray] = useState([]);
 
-  const [open, setOpen] = useState(false);
+  const [openSolved, setOpenSolved] = useState(false);
+  const [openUnsolved, setOpenUnsolved] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
+
+  const handleOpenSolved = () => {
+    setOpenSolved(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseSolved = () => {
+    setOpenSolved(false);
+  };
+
+  const handleOpenUnsolved = () => {
+    setOpenUnsolved(true);
+  };
+
+  const handleCloseUnsolved = () => {
+    setOpenUnsolved(false);
   };
 
   useEffect(() => {
@@ -145,44 +187,98 @@ export default function Game({ game_id, gameOfTheDay }) {
           setGuesses,
           numGuesses,
           setNumGuesses,
+          numCorrectGuesses,
+          setNumCorrectGuesses,
           gameData,
           unsolvedRows,
           setUnsolvedRows,
           solvedRows,
           setSolvedRows,
           gameOfTheDay,
-          isGameOver,
-          setIsGameOver,
-          handleOpen
+          isGameOverSolved,
+          setIsGameOverSolved,
+          isGameOverUnsolved,
+          setIsGameOverUnsolved,
+          handleOpenSolved,
+          handleOpenUnsolved,
+          setAllGuessesArray,
         }}
       >
         <p className="gameTitle">{gameData.title}</p>
         <GameGrid />
-        {!isGameOver && (
+        {!isGameOverSolved && !isGameOverUnsolved && (
           <p className="instructions">
             Find groups of four that have something in common!
           </p>
         )}
-        {isGameOver && (
+        {isGameOverSolved && (
           <p className="instructions">
-            Congratulations, you completed the game!
+            You completed the game!
+          </p>
+        )}
+        {isGameOverUnsolved && (
+          <p className="instructions">
+            Next time!
           </p>
         )}
         <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle style={{ justifyContent: "center"}}>{"Congrats!"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description" style={{justifyContent: "center"}}>
-            You completed Hockey Connections: {gameData.title}
-          </DialogContentText>
-        </DialogContent>
-      </Dialog>
+          open={openSolved}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleCloseSolved}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle style={{ textAlign: "center" }}>
+            {"Great!"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText
+              id="alert-dialog-slide-description"
+              style={{ textAlign: "center" }}
+            >
+              You completed Hockey Connections: {gameData.title}
+            </DialogContentText>
+            <DialogContent style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+              {allGuessesArray.map((row, index) => (
+                <ResultsRow
+                  key={index}
+                  row={row}
+                  gameData={gameData.answerData}
+                />
+              ))}
+            </DialogContent>
+          </DialogContent>
+        </Dialog>
+        <Dialog
+          open={openUnsolved}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleCloseUnsolved}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle style={{ textAlign: "center" }}>
+            {"Next time!"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText
+              id="alert-dialog-slide-description"
+              style={{ textAlign: "center" }}
+            >
+              Hockey Connections: {gameData.title}
+            </DialogContentText>
+            <DialogContent style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+              {allGuessesArray.map((row, index) => (
+                <ResultsRow
+                  key={index}
+                  row={row}
+                  gameData={gameData.answerData}
+                />
+              ))}
+            </DialogContent>
+          </DialogContent>
+        </Dialog>
       </GameContext.Provider>
+
     </>
   );
 }

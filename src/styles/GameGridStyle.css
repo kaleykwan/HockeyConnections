@@ -89,6 +89,18 @@
   margin-bottom: 4px;
 }
 
+.coloredSquare{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.coloredSquareRow {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+}
+
 @media (max-width: 35rem) {
   .title {
     font-size: 2em;
