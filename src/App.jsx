@@ -16,11 +16,7 @@ function App() {
             <Route path="/:gameID" element={<GamePage />} />
           </Routes>
         </div>
-        <ToastContainer
-          toastClassName="custom-toast"
-          bodyClassName="custom-toast-body"
-          style={{ width: "auto" }}
-        />
+        <ToastContainer />
       </BrowserRouter>
     </>
   );

@@ -299,12 +299,12 @@ export default function GameGrid() {
             onClick={(e) => {
               e.currentTarget.blur();
               const result = submit();
-              if (result == "one away") {
+              if (result == "one away" && !isGameOverSolved && !isGameOverUnsolved) {
                 toast("one away!", {
                   autoClose: 800,
                   className: "custom-toast",
+                  position: "bottom-center",
                   transition: Zoom,
-                  position: "top-center",
                   closeButton: false,
                   hideProgressBar: true,
                   style: {
